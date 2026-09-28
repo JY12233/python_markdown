@@ -33,6 +33,12 @@ uv init --python 3.12 my-app
 
 # 使用特定模板
 uv init --template fastapi my-api
+
+# 临时设置镜像
+$env:UV_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple"
+
+# 全局镜像
+uv config set index-url "https://pypi.tuna.tsinghua.edu.cn/simple"
 ```
 
 ### 生成目录结构
@@ -290,6 +296,7 @@ uv venv --python 3.11
 # 激活（与标准 venv 相同）
 source .venv/bin/activate      		# macOS/Linux
 source .venv\Scripts\activate       # Windows
+.venv\Scripts\Activate.ps1			# Windows PowerShell
 
 # 退出
 deactivate # 就这个就够了
@@ -491,6 +498,10 @@ uv 采用统一的子命令架构，所有功能均通过 `uv <subcommand>` 调�
 # uv.toml
 [pip]
 index-url = "https://mirrors.aliyun.com/pypi/simple/"
+
+# 这个是清华镜像
+[pip]
+index-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [python]
 preferred-version = "3.12"
