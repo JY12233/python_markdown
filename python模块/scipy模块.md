@@ -104,21 +104,123 @@ SciPy 本身不是一个类，而是一个由多个子包组成的库。
 
 `scipy.stats` 内部包含以下主要子模块和基类：
 
-1. 基类
+### 基类
 
-   `rv_continuous`（连续随机变量基类）、`rv_discrete`（离散随机变量基类）、`rv_histogram`（基于直方图构造分布）。
+`rv_continuous`（连续随机变量基类）、`rv_discrete`（离散随机变量基类）、`rv_histogram`（基于直方图构造分布）。
 
-2. 新基础设施类（SciPy 1.15+）
+| 名称            | 类型             | 说明                                                         |
+| --------------- | ---------------- | ------------------------------------------------------------ |
+| `rv_continuous` | 连续随机变量基类 | 用于子类化构造连续分布，不能直接作为分布使用，<br />提供 `pdf`、`cdf`、`sf`、`ppf`、`isf`、<br />`rvs`、`stats`、`entropy`、`fit`、`expect` 等方法 |
+| `rv_discrete`   | 离散随机变量基类 | 用于子类化构造离散分布，方法体系与 `rv_continuous` 类似，<br />但密度计算使用 `pmf` 而非 `pdf` |
+| `rv_histogram`  | 直方图分布类     | 根据已有直方图构造连续分布对象，继承 `rv_continuous` 的方法，<br />适合从分箱数据生成模板分布 |
 
-   驼峰命名的分布类，如 `Normal`、`Uniform`、`Exponential`、`Binomial` 等。
+### 新基础设施类
 
-3. 子模块
+SciPy 1.15+启用。驼峰命名的分布类，如 `Normal`、`Uniform`、`Exponential`、`Binomial` 等。
 
-   `scipy.stats.mstats`（掩码数组统计）、`scipy.stats.qmc`（准蒙特卡洛）、`scipy.stats.contingency`（列联表分析）、`scipy.stats.sampling`（自定义随机变量采样）。
+| 名称               | 分布类型 | 说明                                       |
+| ------------------ | -------- | ------------------------------------------ |
+| `Normal`           | 连续     | 正态分布，参数为 `loc`、`scale`            |
+| `Uniform`          | 连续     | 均匀分布，参数为 `loc`、`scale`            |
+| `Exponential`      | 连续     | 指数分布，参数为 `loc`、`scale`            |
+| `Beta`             | 连续     | Beta 分布，参数为 `a`、`b`、`loc`、`scale` |
+| `Gamma`            | 连续     | Gamma 分布，参数为 `a`、`loc`、`scale`     |
+| `LogNormal`        | 连续     | 对数正态分布，参数为 `s`、`loc`、`scale`   |
+| `Cauchy`           | 连续     | 柯西分布，参数为 `loc`、`scale`            |
+| `Laplace`          | 连续     | 拉普拉斯分布，参数为 `loc`、`scale`        |
+| `Logistic`         | 连续     | Logistic 分布，参数为 `loc`、`scale`       |
+| `Weibull`          | 连续     | Weibull 分布，参数为 `c`、`loc`、`scale`   |
+| `Pareto`           | 连续     | Pareto 分布，参数为 `b`、`loc`、`scale`    |
+| `Triangular`       | 连续     | 三角分布，参数为 `lower`、`mode`、`upper`  |
+| `Binomial`         | 离散     | 二项分布，参数为 `n`、`p`                  |
+| `Poisson`          | 离散     | 泊松分布，参数为 `mu`                      |
+| `Bernoulli`        | 离散     | 伯努利分布，参数为 `p`                     |
+| `Geometric`        | 离散     | 几何分布，参数为 `p`                       |
+| `NegativeBinomial` | 离散     | 负二项分布，参数为 `n`、`p`                |
+| `Hypergeometric`   | 离散     | 超几何分布，参数为 `M`、`n`、`N`           |
+| `Categorical`      | 离散     | 分类分布，参数为类别概率数组               |
+| `Multinomial`      | 离散     | 多项分布，参数为 `n`、`p`                  |
 
-4. 预定义分布对象
+### 子模块
 
-   `norm`、`t`、`chi2`、`f`、`beta`、`gamma`、`expon`、`uniform`、`binom`、`poisson`、`bernoulli`、`geom`、`hypergeom` 等 100 余个分布。
+`scipy.stats.mstats`（掩码数组统计）、`scipy.stats.qmc`（准蒙特卡洛）、`scipy.stats.contingency`（列联表分析）、`scipy.stats.sampling`（自定义随机变量采样）。
+
+| 名称               | 分布类型 | 说明                                       |
+| ------------------ | -------- | ------------------------------------------ |
+| `Normal`           | 连续     | 正态分布，参数为 `loc`、`scale`            |
+| `Uniform`          | 连续     | 均匀分布，参数为 `loc`、`scale`            |
+| `Exponential`      | 连续     | 指数分布，参数为 `loc`、`scale`            |
+| `Beta`             | 连续     | Beta 分布，参数为 `a`、`b`、`loc`、`scale` |
+| `Gamma`            | 连续     | Gamma 分布，参数为 `a`、`loc`、`scale`     |
+| `LogNormal`        | 连续     | 对数正态分布，参数为 `s`、`loc`、`scale`   |
+| `Cauchy`           | 连续     | 柯西分布，参数为 `loc`、`scale`            |
+| `Laplace`          | 连续     | 拉普拉斯分布，参数为 `loc`、`scale`        |
+| `Logistic`         | 连续     | Logistic 分布，参数为 `loc`、`scale`       |
+| `Weibull`          | 连续     | Weibull 分布，参数为 `c`、`loc`、`scale`   |
+| `Pareto`           | 连续     | Pareto 分布，参数为 `b`、`loc`、`scale`    |
+| `Triangular`       | 连续     | 三角分布，参数为 `lower`、`mode`、`upper`  |
+| `Binomial`         | 离散     | 二项分布，参数为 `n`、`p`                  |
+| `Poisson`          | 离散     | 泊松分布，参数为 `mu`                      |
+| `Bernoulli`        | 离散     | 伯努利分布，参数为 `p`                     |
+| `Geometric`        | 离散     | 几何分布，参数为 `p`                       |
+| `NegativeBinomial` | 离散     | 负二项分布，参数为 `n`、`p`                |
+| `Hypergeometric`   | 离散     | 超几何分布，参数为 `M`、`n`、`N`           |
+| `Categorical`      | 离散     | 分类分布，参数为类别概率数组               |
+| `Multinomial`      | 离散     | 多项分布，参数为 `n`、`p`                  |
+
+### 预定义分布对象
+
+`norm`、`t`、`chi2`、`f`、`beta`、`gamma`、`expon`、`uniform`、`binom`、`poisson`、`bernoulli`、`geom`、`hypergeom` 等 100 余个分布。
+
+| 名称           | 分布类型 | 说明                                                         |
+| -------------- | -------- | ------------------------------------------------------------ |
+| `norm`         | 连续     | 正态分布，参数为 `loc`、`scale`                              |
+| `lognorm`      | 连续     | 对数正态分布，参数为 `s`、`loc`、`scale`                     |
+| `uniform`      | 连续     | 均匀分布，参数为 `loc`、`scale`                              |
+| `triang`       | 连续     | 三角分布，参数为 `left`、`c`、`right`                        |
+| `expon`        | 连续     | 指数分布，参数为 `loc`、`scale`                              |
+| `gamma`        | 连续     | Gamma 分布，参数为 `a`、`loc`、`scale`                       |
+| `beta`         | 连续     | Beta 分布，参数为 `a`、`b`、`loc`、`scale`                   |
+| `cauchy`       | 连续     | 柯西分布，参数为 `loc`、`scale`                              |
+| `laplace`      | 连续     | 拉普拉斯分布，参数为 `loc`、`scale`                          |
+| `logistic`     | 连续     | Logistic 分布，参数为 `loc`、`scale`                         |
+| `weibull_min`  | 连续     | Weibull 最小分布，参数为 `c`、`loc`、`scale`                 |
+| `weibull_max`  | 连续     | Weibull 最大分布，参数为 `c`、`loc`、`scale`                 |
+| `pareto`       | 连续     | Pareto 分布，参数为 `b`、`loc`、`scale`                      |
+| `erlang`       | 连续     | Erlang 分布，参数为 `a`、`loc`、`scale`                      |
+| `halfnorm`     | 连续     | 半正态分布，参数为 `loc`、`scale`                            |
+| `halfcauchy`   | 连续     | 半柯西分布，参数为 `loc`、`scale`                            |
+| `halflogistic` | 连续     | 半 Logistic 分布，参数为 `loc`、`scale`                      |
+| `genlogistic`  | 连续     | 广义 Logistic 分布，参数为 `c`、`loc`、`scale`               |
+| `gumbel_l`     | 连续     | Gumbel 左尾分布（最小值型），参数为 `loc`、`scale`           |
+| `gumbel_r`     | 连续     | Gumbel 右尾分布（最大值型），参数为 `loc`、`scale`           |
+| `genextreme`   | 连续     | 广义极值分布，参数为 `c`、`loc`、`scale`                     |
+| `gennorm`      | 连续     | 广义正态分布，参数为 `beta`、`loc`、`scale`                  |
+| `genpareto`    | 连续     | 广义 Pareto 分布，参数为 `c`、`loc`、`scale`                 |
+| `reciprocal`   | 连续     | 倒三角分布，参数为 `left`、`c`、`right`                      |
+| `vonmises`     | 连续     | Von Mises 分布（圆形正态分布），参数为 `mu`、`kappa`         |
+| `wrapcauchy`   | 连续     | wrapped Cauchy 分布，参数为 `loc`、`scale`                   |
+| `t`            | 连续     | Student's t 分布，参数为 `df`、`loc`、`scale`                |
+| `f`            | 连续     | F 分布（Snedecor 分布），参数为 `dfn`、`dfd`、`loc`、`scale` |
+| `chi2`         | 连续     | 卡方分布，参数为 `df`、`loc`、`scale`                        |
+| `norminvgauss` | 连续     | 正态逆高斯分布，参数为 `alpha`、`beta`、`loc`、`scale`       |
+| `ksone`        | 连续     | 单样本 Kolmogorov-Smirnov 统计量分布                         |
+| `kstwobig`     | 连续     | 大样本双样本 K-S 统计量分布                                  |
+| `binom`        | 离散     | 二项分布，参数为 `n`、`p`                                    |
+| `poisson`      | 离散     | 泊松分布，参数为 `mu`                                        |
+| `bernoulli`    | 离散     | 伯努利分布，参数为 `p`                                       |
+| `geom`         | 离散     | 几何分布，参数为 `p`                                         |
+| `hypergeom`    | 离散     | 超几何分布，参数为 `M`、`n`、`N`                             |
+| `negbinom`     | 离散     | 负二项分布，参数为 `n`、`p`                                  |
+| `nbinom`       | 离散     | 负二项分布（`negbinom` 的别名），参数为 `n`、`p`             |
+| `hypergeom`    | 离散     | 超几何分布，参数为 `M`、`n`、`N`                             |
+| `zipf`         | 离散     | Zipf 分布（齐普夫分布），参数为 `a`                          |
+| `randint`      | 离散     | 离散均匀分布，参数为 `low`、`high`                           |
+| `boltzmann`    | 离散     | Boltzmann 分布，参数为 `x`                                   |
+| `logser`       | 离散     | 对数级数分布，参数为 `p`                                     |
+| `rational`     | 离散     | 有理分布，参数为 `ar`、`br`                                  |
+| `skellam`      | 离散     | Skellam 分布（两泊松差分布），参数为 `mu1`、`mu2`            |
+| `poisson`      | 离散     | 泊松分布，参数为 `mu`                                        |
 
 ## 常用属性
 
@@ -149,7 +251,7 @@ SciPy 本身不是一个类，而是一个由多个子包组成的库。
 
 | 类别 | 函数/方法 | 说明 |
 | :--- | :--- | :--- |
-| 分布通用方法 | `rvs()`、<br />`pdf()`、<br />`pmf()`、<br />`sf()`、<br />`ppf()`、<br />`isf()`、<br />`stats()`、<br />`moment()`、<br />`entropy()`、<br />`fit()`、<br />`support()`、<br />`interval()`、<br />`mean()`、<br />`median()`、<br />`var()`、<br />`std()` | `rvs()` 生成指定分布的随机样本；<br />`pdf()` 计算连续分布的概率密度函数值；<br />`pmf()` 计算离散分布的概率质量函数值；<br />`sf()` 计算生存函数（即 `1 - cdf`）；<br />`ppf()` 计算百分点函数（`cdf` 的逆函数，用于求分位数）；<br />`isf()` 计算逆生存函数（`sf` 的逆函数）；<br />`stats()` 返回分布的均值、方差、偏度、峰度等矩信息；<br />`moment()` 计算指定阶的非中心矩；<br />`entropy()` 计算分布的（微分）熵；<br />`fit()` 对数据做最大似然估计以拟合分布参数；<br />`support()` 返回分布的支撑域（有效取值范围）上下界；<br />`interval()` 返回以中位数为中心的等尾置信区间；<br />`mean()`、`median()`、`var()`、`std()` 分别返回分布的<br />理论均值、中位数、方差、标准差 |
+| 分布通用方法 | `rvs()`、<br />`pdf()`、<br />`pmf()`、<br />`sf()`、<br />`ppf()`、<br />`cdf`<br />`isf()`、<br />`stats()`、<br />`moment()`、<br />`entropy()`、<br />`fit()`、<br />`support()`、<br />`interval()`、<br />`mean()`、<br />`median()`、<br />`var()`、<br />`std()` | `rvs()` 生成指定分布的随机样本；<br />`pdf()` 计算连续分布的概率密度函数值；<br />`pmf()` 计算离散分布的概率质量函数值；<br />`cdf()` 计算累积分布函数值（即随机变量小于或等于给定值的概率）；<br />`sf()` 计算生存函数（即 `1 - cdf`）；<br />`ppf()` 计算百分点函数（`cdf` 的逆函数，用于求分位数）；<br />`isf()` 计算逆生存函数（`sf` 的逆函数）；<br />`stats()` 返回分布的均值、方差、偏度、峰度等矩信息；<br />`moment()` 计算指定阶的非中心矩；<br />`entropy()` 计算分布的（微分）熵；<br />`fit()` 对数据做最大似然估计以拟合分布参数；<br />`support()` 返回分布的支撑域（有效取值范围）上下界；<br />`interval()` 返回以中位数为中心的等尾置信区间；<br />`mean()`、`median()`、`var()`、`std()` 分别返回分布的<br />理论均值、中位数、方差、标准差 |
 | 描述性统计 | `describe()`、<br />`mean()`、<br />`median()`、<br />`mode()`、<br />`var()`、<br />`std()`、<br />`skew()`、<br />`kurtosis()`、<br />`sem()`、<br />`iqr()`、<br />`gmean()`、<br />`hmean()`、<br />`tmean()`、<br />`tvar()` | `describe()` 一次性返回样本量、最小最大值、均值、方差、偏度、峰度等综合统计摘要；<br />`mean()`、`median()`、`mode()` 分别计算算术均值、中位数、众数；<br />`var()`、`std()` 计算样本方差与标准差；<br />`skew()` 计算偏度（衡量分布不对称程度）；<br />`kurtosis()` 计算峰度（Fisher 定义，正态分布峰度为 0）；<br />`sem()` 计算均值的标准误；<br />`iqr()` 计算四分位距（第三四分位数减第一四分位数）；<br />`gmean()` 计算几何均值；<br />`hmean()` 计算调和均值；<br />`tmean()`、`tvar()` 计算截尾均值与截尾方差（忽略指定范围外的值） |
 | 假设检验 | `ttest_1samp()`、<br />`ttest_ind()`、<br />`ttest_rel()`、<br />`f_oneway()`、<br />`chisquare()`、<br />`kstest()`、<br />`mannwhitneyu()`、<br />`wilcoxon()`、<br />`kruskal()`、<br />`friedmanchisquare()`、<br />`shapiro()`、<br />`normaltest()`、<br />`levene()`、<br />`bartlett()` | `ttest_1samp()` 单样本 t 检验（检验样本均值是否等于给定值）；<br />`ttest_ind()` 独立双样本 t 检验（检验两组独立样本均值是否相等）；<br />`ttest_rel()` 配对样本 t 检验（检验两组配对样本均值差是否为零）；<br />`f_oneway()` 单因素方差分析（检验多组样本均值是否相等）；<br />`chisquare()` 卡方拟合优度检验（检验观测频数与期望频数是否一致）；<br />`kstest()` 单样本 K-S 检验（检验样本是否来自指定分布）；<br />`mannwhitneyu()` Mann-Whitney U 检验（非参数独立双样本位置检验）；<br />`wilcoxon()` Wilcoxon 符号秩检验（非参数配对样本检验）；<br />`kruskal()` Kruskal-Wallis H 检验（非参数多组独立样本检验）；<br />`friedmanchisquare()` Friedman 检验（非参数多组配对样本检验）；<br />`shapiro()` Shapiro-Wilk 正态性检验；<br />`normaltest()` D'Agostino-Pearson 正态性检验（基于偏度和峰度）；<br />`levene()` Levene 方差齐性检验（对非正态数据稳健）；<br />`bartlett()` Bartlett 方差齐性检验（要求数据正态） |
 | 相关与回归 | `pearsonr()`、<br />`spearmanr()`、<br />`kendalltau()`、<br />`linregress()`、<br />`pointbiserialr()` | `pearsonr()` 计算皮尔逊相关系数及双侧 p 值（衡量两变量的线性相关程度）；<br />`spearmanr()` 计算斯皮尔曼秩相关系数及 p 值（衡量单调相关性）；<br />`kendalltau()` 计算肯德尔秩相关系数及 p 值（适用于有序数据）；<br />`linregress()` 执行简单线性回归，返回斜率、截距、相关系数、p 值、标准误；<br />`pointbiserialr()` 计算点双列相关系数（一个连续变量与一个二分类变量的相关性） |
@@ -159,6 +261,18 @@ SciPy 本身不是一个类，而是一个由多个子包组成的库。
 | 列联表 | `contingency.chi2_contingency()`、<br />`contingency.expected_freq()`、<br />`contingency.margins()` | `contingency.chi2_contingency()` 对列联表执行卡方独立性检验；<br />`contingency.expected_freq()` 根据行列边际和计算列联表的期望频数；<br />`contingency.margins()` 返回列联表的行和与列和（边际频数） |
 | 掩码统计 | `mstats.describe()`、<br />`mstats.ttest_1samp()`、<br />`mstats.kruskal()` 等 | `mstats` 子模块提供与主模块同名的统计函数，<br />但支持 `numpy` 掩码数组（masked array），<br />可自动忽略被标记为缺失的数据，适用于含缺失值的数据集 |
 | 其他工具 | `zscore()`、<br />`rankdata()`、<br />`tiecorrect()`、<br />`combine_pvalues()`、<br />`trim_mean()`、<br />`winsorize()` | `zscore()` 计算数据的标准分数（z 分数，即减去均值后除以标准差）；<br />`rankdata()` 对数据排序并返回秩次（支持多种平局处理方法）；<br />`tiecorrect()` 计算秩检验中平局校正因子；<br />`combine_pvalues()` 使用 Fisher 法或 Stouffer 法合并多个独立 p 值；<br />`trim_mean()` 计算截尾均值（去除两端指定比例后求均值）；<br />`winsorize()` 对数据进行缩尾处理（将极端值替换为指定百分位处的值） |
+
+## 分布方法对比
+
+
+| 分布类型 | 方法 | 全称 | 说明 |
+| :--- | :--- | :--- | :--- |
+| 离散分布 | `pmf(x)` | Probability Mass Function | 计算离散分布在某一点 x 处的概率质量，<br />即随机变量恰好等于 x 的概率 |
+| 连续分布 | `pdf(x)` | Probability Density Function | 计算连续分布在某一点 x 处的概率密度值<br />（单点概率为 0，密度值用于比较相对密集程度和绘图） |
+| 离散和连续 | `cdf(x)` | Cumulative Distribution Function | 计算累积分布函数值，即随机变量小于或等于 x 的概率<br />（离散为 pmf 累加，连续为 pdf 积分） |
+| 离散和连续 | `sf(x)` | Survival Function | 计算生存函数，即 `1 - cdf(x)`，<br />表示随机变量大于 x 的概率，用于计算右尾概率 |
+| 离散和连续 | `ppf(q)` | Percent Point Function | 计算百分点函数，即 `cdf` 的逆函数，<br />给定概率 q 返回对应的分位数 x |
+| 离散和连续 | `isf(q)` | Inverse Survival Function | 计算逆生存函数，即 `sf` 的逆函数，<br />给定右尾概率 q 返回对应的分位数 x |
 
 ## 代码示例
 
